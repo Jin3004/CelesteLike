@@ -2,7 +2,6 @@
 #include <Siv3D.hpp>
 #include <memory>
 
-
 class Game {
 public:
 	const Font debug{ 20 }; //デバッグ用のフォントを用意
