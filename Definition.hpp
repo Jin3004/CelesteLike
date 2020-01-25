@@ -2,16 +2,27 @@
 #include <Siv3D.hpp>
 #include <memory>
 
-class Game {
-public:
-	const Font debug{ 20 }; //デバッグ用のフォントを用意
-	virtual void update(std::unique_ptr<Game>&){}
-	virtual void draw(){}
+//Constants. Declaration.
+extern constexpr int32_t DEFAULT_WINDOW_WIDTH = 1280;
+extern constexpr int32_t DEFAULT_WINDOW_HEIGHT = 720;
+extern constexpr double_t SCALE = 1.f;
+
+void Init();
+
+struct InternalData {
+	bool& state;
 };
 
-class SelectStage: public Game {
+class Game {
 public:
-	SelectStage(){}
-	void update(std::unique_ptr<Game>&) override;
-	void draw() override;
+	virtual std::shared_ptr<Game> update(std::shared_ptr<Game> ptr) { return nullptr; }
+	virtual void draw() {}
+};
+
+class SelectStage1 :public Game {
+public:
+	std::shared_ptr<Game> update(std::shared_ptr<Game> ptr)override;
+	void draw()override;
+	SelectStage1(String);
+	SimpleGUIManager gui;
 };
