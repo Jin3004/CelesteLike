@@ -4,6 +4,8 @@ void Main() {
 
 	Init();
 
+	std::shared_ptr<Game> ptr = std::make_shared<SelectStage1>("ff");
+
 	while (System::Update()) {
 
 	}
@@ -13,11 +15,7 @@ void Main() {
 void Init() {
 	Scene::SetBackground(Palette::Blueviolet);
 	Window::Resize(DEFAULT_WINDOW_WIDTH * SCALE, DEFAULT_WINDOW_HEIGHT * SCALE);
-}
-
-SelectStage1::SelectStage1(String gui_file) :gui(FileSystem::FullPath(gui_file))
-{
-
+	Console.open();
 }
 
 std::shared_ptr<Game> SelectStage1::update(std::shared_ptr<Game> ptr) {
