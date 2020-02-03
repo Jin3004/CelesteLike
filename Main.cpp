@@ -2,26 +2,40 @@
 
 void Main() {
 
-	Init();
+	std::shared_ptr<Game> game_ptr = std::make_shared<SelectStage>();
+	std::shared_ptr<Data> data_ptr = std::make_shared<Data>();
+	std::thread logic([&]() {
 
-	std::shared_ptr<Game> ptr = std::make_shared<SelectStage1>("ff");
+		while (data_ptr->state = System::Update() && data_ptr->state) {
+			auto ischanged = game_ptr->update();
+			if (ischanged != nullptr)game_ptr = ischanged;
+		}
 
-	while (System::Update()) {
+		});
+}
+
+struct Data {
+	bool state = true;
+};
+
+class Game {
+public:
+	virtual std::shared_ptr<Game> update() {}
+	virtual void draw() {}
+};
+
+class SelectStage :Game {
+public:
+	int32_t cnt = 0;
+	std::shared_ptr<Game> update()override {
+		cnt++;
+		if (cnt != 500)return nullptr;
+		//else return std::make_shared<>
+	}
+	void draw()override {
+		Print << cnt;
+	}
+	SelectStage(String directory) {
 
 	}
-
-}
-
-void Init() {
-	Scene::SetBackground(Palette::Blueviolet);
-	Window::Resize(DEFAULT_WINDOW_WIDTH * SCALE, DEFAULT_WINDOW_HEIGHT * SCALE);
-	Console.open();
-}
-
-std::shared_ptr<Game> SelectStage1::update(std::shared_ptr<Game> ptr) {
-	return nullptr;
-}
-
-void SelectStage1::draw() {
-
-}
+};
